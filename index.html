@@ -1,0 +1,329 @@
+<!-- https://www.w3schools.com/howto/howto_js_topnav_responsive.asp -->
+<!doctype html> 
+<html lang="en"> 
+<head>
+	<meta name = "viewport" content = "width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="aos-master/aos-master/dist/aos.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel = "icon" type = "image/png" href = "favicon.png" />
+    <title>DeHart - Home</title>
+	<style>
+		body {
+			overflow-x: hidden;
+		}
+		
+		#navigation {
+			position: -webkit-sticky;
+			position: sticky;
+			width: 100%;
+			height: 100px;
+			top: 0;
+			z-index: 100;
+			background-color: #2a363b;
+		}
+		#navigation .icon {
+			display: none;
+		}
+		
+		#navigation a {
+			float: right;
+			display: block;
+			text-align: center;
+			padding: 14px 16px;
+			margin-top: 25px;
+			text-decoration: none;
+			font-size: 20px;
+			color: white;
+			background-color: #2a363b;
+		}
+		#navigation a:hover {
+			background-color: white;
+			color: black;
+			transition: 0.4s ease-in-out;
+		}
+		#navigation a.active {
+			background-color: black;
+			color: white;
+		}
+		@media screen and (max-width: 600px) {
+			#navigation a:not(:first-child) {display: none;}
+			#navigation a.icon {
+				float: right;
+				display: block;
+			}
+		}
+
+		@media screen and (max-width: 600px) {
+			#navigation.responsive {position: relative;}
+			#navigation.responsive .icon {
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+			#navigation.responsive a {
+				float: none;
+				display: block;
+				text-align: left;
+				margin: 0px;
+			}
+		}
+		
+		.footer {
+			background-color: #2a363b;
+			width: 100%;
+			height: 50px;
+			color: white;
+			padding: 10px;
+			bottom: 0px;
+		}
+		
+		a {
+			color: black;
+		}
+		a:hover {
+			color: black;
+		}
+		
+		.dank_card {
+			transition: 0.4s ease-in-out;
+			display: inline-block;
+		}
+		.dank_card:hover {
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			transform: scale(1.05);
+			z-index: 1000;
+		}
+		
+		.parallax {
+			background-image: url("CodeFullSlider2.jpg");
+			min-height: 500px;
+			background-attachment: fixed;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+	</style>
+	
+</head>
+<body>
+
+	<!--<div class = "parallax"></div> -->
+
+	<nav id = "navigation">
+		<image src = "images/logo3.png" class = "image-responsive" style = "height: 90%; margin-left: 20px; padding-top: 4px; max-width: 70%;" />
+		<a href = "javascript:void(0);" class = "icon" onclick = "myFunction()">
+			<i class = "fa fa-bars"></i>
+		</a>
+		<a href = "https://www.linkedin.com/in/john-dehart" style = "margin-right: 45px;" target = "_blank" rel = "noopener nereferrer">LinkedIn</a>
+		<a href = "https://github.com/jdhart7" target = "_blank" rel = "noopener nereferrer">GitHub</a>
+		<a href = "#">Articles</a>
+		<a href = "projects.html">Projects</a>
+		<a href = "#">Home</a>
+	</nav>
+	
+	
+
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+		<a href = "https://github.com/jdhart7" target = "_blank" rel = "noopener nereferrer">
+      <img src="images/CodeFullSlider2.jpg" alt="Chania">
+      <div class="carousel-caption" style = "background-color: rgba(0, 0, 0, 0.3);">
+        <h3>GitHub</h3>
+        <p>Check out the code for my projects on my GitHub page.</p>
+      </div>
+	  </a>
+    </div>
+
+
+    <div class="item">
+	<a href = "https://dehart.dev/h/projects/">
+      <img src="images/planeSlider2.jpg" alt="New York">
+      <div class="carousel-caption" style = "background-color: rgba(0, 0, 0, 0.3);">
+        <h3>Projects</h3>
+        <p>Interact with my JavaScript projects on the projects page.</p>
+      </div>
+    </div>
+	</a>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+
+		
+		<div data-aos = "fade-up" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<div class = "container-fluid">
+			<center>
+			<div class = "col-sm-2"></div>
+			<a href = "https://www.linkedin.com/in/john-dehart" target = "_blank"><div class = "col-sm-4 dank_card">
+				<center><image src = "images/linkedin.png" style = "width: 25%; padding-top: 5%;" /></center>
+				<br /><center><h2>Find me on LinkedIn</h2><center>
+			</div></a>
+			<a href = "https://github.com/jdhart7" target = "_new"><div class = "col-sm-4 dank_card" style = "">
+				<center><image src = "images/github.png" style = "width: 25%; padding-top: 5%;" /></center>
+				<br /><center><h2>Find me on GitHub</h2><center>
+			</div></a>
+			<div class = "col-sm-2"></div>
+			</center>
+		</div>
+		</div>
+		
+		
+		<div data-aos = "fade-up">
+			<center><h1>Skills</h1></center>
+			<center><h4>This section of the website acts as a virtual resume. It shows the computer skills I've learned and how well I can perform that skill.</h4></center>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>HTML:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 100%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>Bootstrap:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 99%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>CSS:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 99%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>JavaScript</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 98%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>Computer Repair:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 87%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>Web Design:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 78%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>WordPress:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 75%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>SQL:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 65%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>Photoshop:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 60%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>C++:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 50%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>C:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 35%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>Microcontrollers:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 35%">
+				inside text
+			</div>
+			</div>
+		</div>
+		<div data-aos = "fade-left" style = "width: 100%; height: 10%; background-color: white; margin: 3px;">
+			<h2>Python:</h2>
+			<div class = "progress" style = "margin: 15px; width: 70%;">
+			<div class = "progress-bar progress-bar-success progress-bar-striped active" role = "progressbar" aria-valuenow = "99" aria-valuemin = "0" aria-valuemax = "100" style = "width: 15%">
+				inside text
+			</div>
+			</div>
+		</div>
+	
+
+	<script src="aos-master/aos-master/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        easing: 'ease-in-out-sine'
+      });
+    </script>
+	
+	<div class = "footer">
+		<div style = "float: left;">
+			<h4>©John DeHart, 2020</h4>
+		</div>
+		<div style = "float: right;">
+			<h4>Contact Me: john@dehart.dev</h4>
+		</div>
+	</div>
+	
+	<script>
+		function myFunction() {
+			var x = document.getElementById("navigation");
+			if (x.className === "navigation") {
+				x.className += " responsive";
+			} else {
+				x.className = "navigation";
+			}
+		}
+	</script>
+	
+</body>
+</html>
