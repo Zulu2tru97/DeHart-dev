@@ -1,0 +1,81 @@
+<!-- https://www.w3schools.com/howto/howto_js_topnav_responsive.asp -->
+<!doctype html> 
+<html lang="en"> 
+<head>
+	<meta name = "viewport" content = "width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel = "icon" type = "image/png" href = "favicon.png" />
+	<link rel = "stylesheet" type = "text/css" href = "website.css">
+	<meta name="description" content="Links to various articles I have written. Topics will include things like technical articles, tutourials, project explanations, and hobbies." />
+    <title>Articles - dehart.dev - Software Developer John DeHart</title>
+	<style>
+		
+		
+	</style>
+	
+</head>
+<body>
+<div class = "site">
+	
+	<nav id = "navigation">
+		<image src = "images/logo3.png" class = "image-responsive" style = "height: 90%; margin-left: 20px; padding-top: 4px; max-width: 70%;" />
+		<a href = "javascript:void(0);" class = "icon" onclick = "myFunction()">
+			<i class = "fa fa-bars"></i>
+		</a>
+		<a href = "https://www.linkedin.com/in/john-dehart" style = "margin-right: 45px;" target = "_blank" rel = "noopener nereferrer">LinkedIn</a>
+		<a href = "https://github.com/jdhart7" target = "_blank" rel = "noopener nereferrer">GitHub</a>
+		<a href = "#">Articles</a>
+		<a href = "projects.html">Projects</a>
+		<a href = "index.html">Home</a>
+	</nav>
+	
+	
+	<div class = "parallax" style = "background-image: url('images/books.jpg');">
+		<center>
+			<div>
+				<image class = "image-responsive" src = "images/articlesType.png" style = "margin-top: 25vh; max-width: 90%;" />
+			</div>
+		</center>
+	</div>
+	
+	<a href = "articles/fixedPriorityVsRateMonotonic.html">
+		<div class = "row dank_card" style = "background-color: white; height: 15.5vw; margin-top: -0vw; display: inline-block;">
+			<div class = "col-sm-12" style = "color: black; margin-top: -0vw; display: inline-block;">
+				<h1 style = "padding: 10px; padding-left: 35px;">Scheduling Algorithms: Fixed Priority Vs. Dynamic</h1>
+				<h4 style = "padding: 10px; padding-left: 35px; padding-right: 35px;">This article goes over the difference between fixed priority and dynamic scheduling algorithms as outlined in Liu and
+											Layland's "Scheduling Algorithms for Multi-Programming in a Hard-Real-Time Environment." Examples, definitions, and
+											explainations provided.</h4>
+			</div>
+		</div>
+	</a>
+	
+	<div style = "height: 200px;"></div>
+	<div><i>&nbsp;Header Image by Patrick Tomasso</i></div>
+	
+	
+	<div class = "footer">
+		<div style = "float: left; display: inline-block;">
+			<h4>&#169;John DeHart, 2020</h4>
+		</div>
+		<div style = "float: right; display: inline-block;">
+			<h4><span class="glyphicon glyphicon-envelope"></span> john@dehart.dev</h4>
+		</div>
+	</div>
+	
+	
+	<script>
+		function myFunction() {
+			var x = document.getElementById("navigation");
+			if (x.className === "navigation") {
+				x.className += " responsive";
+			} else {
+				x.className = "navigation";
+			}
+		}
+	</script>
+</div>
+</body>
+</html>
