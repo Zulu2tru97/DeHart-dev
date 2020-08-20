@@ -1,0 +1,152 @@
+<!doctype html> 
+<html lang="en"> 
+<head>
+	<meta name = "viewport" content = "width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel = "icon" type = "image/png" href = "../favicon.png" />
+	<link rel = "stylesheet" type = "text/css" href = "../website.css">
+	<meta name="msvalidate.01" content="3E9E2578E9650B1646B770067023F437">
+	<meta name="description" content = "An explanation on Liu and Layland's paper regarding dynamic scheduling in a hard real-time environment. Programming demonstration with code provided." />
+    <title>Fixed Priority Vs Dynamic Scheduling - Real-Time Systems - dehart.dev</title>
+	
+</head>
+<body>
+<div class = "site">
+	
+	<nav id = "navigation">
+		<image src = "../images/logo3.png" class = "image-responsive" style = "height: 90%; margin-left: 20px; padding-top: 4px; max-width: 70%;" />
+		<a href = "javascript:void(0);" class = "icon" onclick = "myFunction()">
+			<i class = "fa fa-bars"></i>
+		</a>
+		<a href = "https://www.linkedin.com/in/john-dehart" style = "margin-right: 45px;" target = "_blank" rel = "noopener nereferrer">LinkedIn</a>
+		<a href = "https://github.com/jdhart7" target = "_blank" rel = "noopener nereferrer">GitHub</a>
+		<a href = "#">Articles</a>
+		<a href = "../projects.html">Projects</a>
+		<a href = "../index.html">Home</a>
+	</nav>
+	
+	
+
+		<div class = "row">
+			<div class = "col-sm-3"></div>
+			<div class = "col-sm-7" style = "margin: 10px;">
+				<h1>Fixed Priority Vs. Dynamic Priority Scheduling Algorithms<small> John DeHart - June 9, 2020</small></h1>
+<br />
+<p>  &nbsp; &nbsp; &nbsp;   In my final year at West Virginia State University, my senior seminar teacher instructed us to create a program that demonstrated the benefits of using a dynamic scheduling algorithm over a fixed priority algorithm. He gave us a paper to read (written back in 1973), then sent us out to write the program like a mother bird pushing her babies out of a tree. I had a hard time understanding the paper at first; mostly because I had very little experience with real-systems and the paper is incredibly dry. It was also pretty difficult to find resources on the paper (despite it actually being a defining paper in the field), so I decided to make <a href="https://dehart.dev/projects/schedulingDom.html" target="_new" rel="noopener noreferrer"><u><i>the program</u></i></a> I wrote public, as well as to write this article in order to help anyone in a similar situation. This post will (hopefully) explain the algorithms as described in <a href="https://www.cs.ru.nl/~hooman/DES/liu-layland.pdf" target="_new" rel="noopener noreferrer"><u><i>Scheduling Algorithms for Multi-programming in a Hard-Real-Time Environment</u></i></a> by Dr. C. L. Liu and James W. Layland.</p>
+
+<h3>What is a Real-Time System?</h3>
+<p>  &nbsp; &nbsp; &nbsp;   First, I'll go ahead and give a very brief overview of what a real-time system is, as well as go over some important terms used in the paper. A real-time system is a system that works in real-time. Sounds like I'm being sarcastic, but that's literally it. A good example of a real-time system is the fly-by-wire system in an airplane. The pilot doesn't have any direct control over the mechanical parts of the plane. Instead, he moves the yoke, which tells a computer what parts to move in real-time.</p>
+
+<p>  &nbsp; &nbsp; &nbsp;   Fly-by-wire is also a good example of a <b>hard</b> real-time system. In a hard real-time system, there would be catastrophic effects to a task being late (the tasks, in this case, being processing input and controlling the mechanical parts of the plane).</p>
+
+<p>  &nbsp; &nbsp; &nbsp;   In contrast, a <b>soft</b> real-time environment is one where a task set or two can be missed without something bad happening to the system. Or, as the paper decides to put it: "where a statistical distribution of response times is acceptable." The algorithms we're discussing exist in a <b>hard</b> real-time environment. This is an important distinction to make because it means <b>no</b> task can be missed when considering these algorithms.</p>
+
+<h3>Terms to Understand:</h3>
+<p>  &nbsp; &nbsp; &nbsp;   Preemptive means that one task can interrupt another if it has a higher priority. All three algorithms in the paper are preemptive. If they were not preemptive, the first task would have to be completed before the algorithm could start on the second. A Gantt diagram just shows how the algorithm works. Time is shown in units at the bottom of the graph, the green sections represent a task being completed during that time unit. Purple lines represnt a task arriving again and red lines represent that a task has arrived without being completed.</p>
+
+<p>  &nbsp; &nbsp; &nbsp;   A critical instant is when the tasks arrive at the same time. A critical time zone happens at a critical instant. It is the time between when a task arrives and when it is completed. Request periods are how often the task must be completed. For example, if a task has a request period of 30, the task would need to be completed by time unit 30, 60, 90, etc. C represents period length and T represents task length (how long it takes to complete that task).</p>
+
+<p>  &nbsp; &nbsp; &nbsp;   If you didn't understand something in that section, don't worry about it. I'll go over it with context here in a second. If you still don't understand it after you've finished reading, you can ask down in the comments.</p>
+
+<h3>The Fixed Priority Algorithm:</h3>
+<p>  &nbsp; &nbsp; &nbsp;   Now that the background is out of the way, we can start talking about how the algorithms schedule tasks. The fixed priority rate monotonic algorithm schedules task based on their <i><b>period length</i></b>. If a task needs to be completed every 41 time units, it has a higher priority than a task that has to be completed every 62. Of course, the algorithm is also preemptive and can interrupt other tasks. If the task with 41 time units arrives before the 62 is finished, the algorithm stops the 62 until the 41 is finished. Like so:</p>
+
+<center><figure><image src = "https://dehart.dev/h/wp-content/uploads/2020/06/fixedPriority.jpg" class = "img-responsive"><figcaption>Gantt diagram of the fixed priority rate monotonic algorithm.</figcaption></figure></center>
+
+<p>The first task arrives a second time at the 41<sup>st</sup> time unit. However, the third task is not yet completed. Because the first task has a shorter deadline, it has a higher priority and must go first under this algorithm. The third task is then allowed to continue after the first is finished. Don't worry about the bound and the utilization, yet. I'll go over those next. Just make sure you understand this, first.</p>
+
+<h3>How do you determine the fixed priority algorithm is feasible?</h3>
+<p>  &nbsp; &nbsp; &nbsp;   So, you might be wondering, "Is there a way to tell if this algorithm will work for a task set?" Yes, there is. First, let's define some variables. T represents a task's length. If a task takes 20 time units to complete, T = 20. Multiple tasks are differentiated with a subscript. For example, T<sub>1</sub> may be equal to 20, T<sub>2</sub> = 10, etc., etc., up to T<sub>i</sub> (i being the number of tasks).</p>
+
+<p>  &nbsp; &nbsp; &nbsp;   The other variable you need to understand to determine feasibility is C. C is the task's request period. This is how often a task must be completed. For example, if the request period is C = 30, the task must be completed <b><i>every 30 time units</b></i>. If the task is unable to be completed due to conflicts, the algorithm is <b><i>not</b></i> feasible. C is also differentiated using subscripts. I'll also take the opportunity here to mention that, while i represents the number of tasks for the subscripts, m represents the number of tasks as well. So if there are 3 tasks, m = 3 for that set.</p>
+
+<h3>Calculating the Utilization Bound:</h3>
+<p>  &nbsp; &nbsp; &nbsp;   Now we can finally get to the math. To calculate whether a task set can be feasible with this algorithm, we must first calculate the utilization bound (represented with U). The utilization bound is the highest percentage of processor time the task set can use and still be feasible. I'll explain a little more after we get the math out of the way.</p>
+
+<p>  &nbsp; &nbsp; &nbsp;   The utilization bound is calculated with the formula:</p>
+
+<center><h2>U = m(2<sup>1/m</sup>-1)</h2></center>
+
+<p>Not that tough. As an example, we'll say that there are 4 tasks in a set. That would be U = 4(2<sup>1/4</sup>-1). The utilization bound would then be 75.7%. If there were 3 tasks in a set, the bound would be 77.9%. Note that the less tasks there are, the higher the bound. This is because when there are less tasks, it gives them a better chance to complete. The utilization bound will only change based on how many tasks there are. Task length/period length will <i><b>not</i></b> effect U.</p>
+
+<h3>Calculating Processor Utilization:</h3>
+<p>  &nbsp; &nbsp; &nbsp;   Calculating processor utilization is slightly more difficult and involves summations. The formula is as follows:</p>
+
+<center><h2>U = ∑<sup>m</sup> (C<sub>i</sub> / T<sub>i</sub>)</h2></center>
+
+<p>Let's say we have a task set: C<sub>1</sub>=6, C<sub>2</sub>=1, and C<sub>3</sub>=26. T<sub>1</sub>=24, T<sub>2</sub>=50, and T<sub>3</sub>=60. To complete the formula, we'd say:</p>
+
+<center><h2>(C<sub>1</sub> / T<sub>1</sub>) + (C<sub>1</sub> / T<sub>1</sub>) + (C<sub>1</sub> / T<sub>1</sub>)</h2></center>
+
+<p>Which then goes to:</p>
+
+<center><h2>(6 / 24) + (1 / 50) + (26 / 60) = 70.3%</h2></center>
+
+<p>Because the bound for a task set m = 3 is 78%, the task set is feasible under this algorithm.</p>
+
+<h3>What if U is Larger Than the Bound?</h3>
+<p>  &nbsp; &nbsp; &nbsp;   That's a good question. If U is larger than the bound, the task set <b><i>may</b></i> still be feasible. The only way to find out at that point is to create a Gantt diagram. There are plenty of other resources on how to do that. <a href="https://dehart.dev/projects/schedulingDom.html" target="_new" rel="noopener noreferrer"><i><u>This program</i></u></a> I wrote to demonstrate these algorithms will randomly generate task sets and draw the diagrams, in case you want to see some examples. Just know that the task set isn't feasible until the Gantt diagram is drawn to the critical instant of a task set. The critical instant happens at the least common multiple of the request periods (T). Of course, the Utilization can never be above 100%.
+
+<h2>The Dynamic, Deadline Driven Algorithm:</h2>
+<p>  &nbsp; &nbsp; &nbsp;   Now we've finally made it to the star of the show: the Dynamic Algorithm. This algorithm is the reason the paper was written. It works by calculating which task needs to be completed <i><b>every</i></b> time unit. It determines which unfinished task needs to be completed, then picks the one with the closest deadline. Of course, this algorithm is also preemptive. Here's an example of a task set being completed with the dynamic algorithm:</p>
+
+<center><figure><image src = "https://dehart.dev/h/wp-content/uploads/2020/06/dynamicAlgorithm.jpg" class = "img-responsive"><figcaption>The fixed priority algorithm compared to the dynamic algorithm. This task set is particularly interesting because the it demonstrates the difference in efficiency between the two algorithms.</figcaption></figure></center>
+
+<p>Note that the fixed priority algorithm preempts the last task in favor of the first at time unit 31. This is because it was a shorter task and therefore had a higher priority under this algorithm. Because of this though, the algorithm is not feasible for this task set. The deadline driven algorithm, however, <i><b>completes</i></b> the final task before moving on because it has the earliest uncompleted deadline at that point.</p>
+
+<h3>When is the Deadline Driven Algorithm Feasible?</h3>
+
+<p>  &nbsp; &nbsp; &nbsp;   The deadline driven algorithm is feasible as long as the utilization bound is under 100%. That's it. No math for this one, thank God. Why not, though? Well, it's because the processor is using <i><b>every single</i></b> time unit, whereas there were many wasted time units under the fixed priority algorithm.</p>
+
+<h2>The Mixed Algorithm:</h2>
+<p>  &nbsp; &nbsp; &nbsp;   Liu and Layland's paper also outlined a "mixed" scheduling algorithm. This algorithm is simply a mixture of the two previous algorithms. Computer Scientists are creative with names, huh? I'll give a very basic run-down on how this algorithm works, since it isn't particularly relevant today. They basically split the task set into two halves. The first half contains all the tasks with the shortest periods. The second group contains the tasks with the largest periods. The first group is completed using the fixed priority algorithm, but the second group is completed with the deadline driven. The second group can only go when the first group <i><b>is not completing a task.</i></b> This is very important. The processor cannot complete two tasks at the same time.</p>
+
+<h3>Why is Talk About This Algorithm?</h3>
+<p>  &nbsp; &nbsp; &nbsp;   The hardware back in the 70's was much different from the hardware today. Liu and Layland realized that the algorithm they created could not be run on computers at the time. They also realized that it would be incredibly expensive to replace the hardware so they could implement the dynamic algorithm, so they came up with the mixed scheduling algorithm. This algorithm could be implemented on the hardware of the time with only a minor software update, rather than replacing entire machines or hardware. Of course, the algorithm was a product of its time, meaning that it's not really relevant today. Althoug it is still an interesting part of history, in my opinion.</p>
+
+<h2>Conclusion</h2>
+<p>  &nbsp; &nbsp; &nbsp;   In this article, we outlined how the fixed priority rate monotonic, dynamic deadline driven, and mixed algorithms work as outlined in Dr. Liu and Layland's groundbreaking paper. We showed that the dynamic algorithm is more efficient than the fixed priority. I also showed how to calculate the utilization bound for each algorithm, as well as how to calculate when the algorithms were feasible. Hopefully this made sense to you and feel free to ask questions in the comments.</p>
+
+<h5>Note:</h5>
+<p>  &nbsp; &nbsp; &nbsp;   The paper is much more extensive than I was. I know that this article was long, but the paper goes much more in-depth. The authors provide mathematical proofs on <i><b>why</i></b> these things are true, whereas I just presented you with the basic facts from the paper. 
+
+<p>I highly suggest you read the paper <a href="https://www.cs.ru.nl/~hooman/DES/liu-layland.pdf" target="_new" rel="noopener noreferrer"><u><i>HERE</u></i></a>.</p>
+
+<p>You can also see randomly generated Gantt Diagrams <i><u><a href="https://dehart.dev/projects/schedulingDom.html" target="_new" rel="noopener noreferrer">HERE.</a></i></u> The program is run in the browser and hosted on this site, so no need to download anything. Seeing some examples on how the algorithms are scheduled might help you understand how they work.</p>
+
+<p>If you're interested in seeing the code for the program, it can be found <i><u><a href="https://github.com/jdhart7/SchedulingSimulator" target="_new" rel="noopener noreferrer">HERE.</a></u></i> The program is written in JavaScript and is run in your browser. No additional software is needed.</p>
+
+<p>Thanks for reading, <br />-John DeHart</p>
+			</div>
+			<div class = "col-sm-2"></div>
+		</div>
+	
+	
+	<div class = "footer">
+		<div style = "float: left; display: inline-block;">
+			<h4>&#169;John DeHart, 2020</h4>
+		</div>
+		<div style = "float: right; display: inline-block;">
+			<h4><span class="glyphicon glyphicon-envelope"></span> john@dehart.dev</h4>
+		</div>
+	</div>
+	
+	
+	<script>
+		function myFunction() {
+			var x = document.getElementById("navigation");
+			if (x.className === "navigation") {
+				x.className += " responsive";
+			} else {
+				x.className = "navigation";
+			}
+		}
+	</script>
+	
+</div>
+	
+</body>
+</html>
