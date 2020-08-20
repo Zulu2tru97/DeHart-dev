@@ -1,4 +1,3 @@
-<!-- https://www.w3schools.com/howto/howto_js_topnav_responsive.asp -->
 <!doctype html> 
 <html lang="en"> 
 <head>
@@ -8,108 +7,17 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel = "icon" type = "image/png" href = "favicon.png" />
-    <title>DeHart - Projects</title>
+	<link rel = "stylesheet" type = "text/css" href = "website.css">
+    <title>Projects - dehart.dev - John DeHart's Website</title>
+	<meta name="description" content="Find all my Web-Based programs hosted here. Projects have GitHub links and explanations on how they work. Applications range from realtime systems to games." />
 	<style>
-		body {
-			overflow-x: hidden;
-		}
 		
-		#navigation {
-			position: -webkit-sticky;
-			position: sticky;
-			width: 100%;
-			height: 100px;
-			top: 0;
-			z-index: 100;
-			background-color: #2a363b;
-		}
-		#navigation .icon {
-			display: none;
-		}
-		
-		#navigation a {
-			float: right;
-			display: block;
-			text-align: center;
-			padding: 14px 16px;
-			margin-top: 25px;
-			text-decoration: none;
-			font-size: 20px;
-			color: white;
-			background-color: #2a363b;
-		}
-		#navigation a:hover {
-			background-color: white;
-			color: black;
-			transition: 0.4s ease-in-out;
-		}
-		#navigation a.active {
-			background-color: black;
-			color: white;
-		}
-		@media screen and (max-width: 600px) {
-			#navigation a:not(:first-child) {display: none;}
-			#navigation a.icon {
-				float: right;
-				display: block;
-			}
-		}
-
-		@media screen and (max-width: 600px) {
-			#navigation.responsive {position: relative;}
-			#navigation.responsive .icon {
-				position: absolute;
-				right: 0;
-				top: 0;
-			}
-			#navigation.responsive a {
-				float: none;
-				display: block;
-				text-align: left;
-				margin: 0px;
-			}
-		}
-		
-		.footer {
-			background-color: #2a363b;
-			width: 100%;
-			height: 50px;
-			color: white;
-			padding: 10px;
-			bottom: 0px;
-		}
-		
-		a {
-			color: black;
-		}
-		a:hover {
-			color: black;
-		}
-		
-		.dank_card {
-			transition: 0.4s ease-in-out;
-			display: inline-block;
-		}
-		.dank_card:hover {
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-			transform: scale(1.05);
-			z-index: 99;
-		}
-		
-		.parallax {
-			background-image: url("images/projectsFullPage1.jpg");
-			min-height: 90vh;
-			background-attachment: fixed;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
 		
 	</style>
 	
 </head>
 <body>
-	
+<div class = "site">
 	
 	<nav id = "navigation">
 		<image src = "images/logo3.png" class = "image-responsive" style = "height: 90%; margin-left: 20px; padding-top: 4px; max-width: 70%;" />
@@ -118,13 +26,13 @@
 		</a>
 		<a href = "https://www.linkedin.com/in/john-dehart" style = "margin-right: 45px;" target = "_blank" rel = "noopener nereferrer">LinkedIn</a>
 		<a href = "https://github.com/jdhart7" target = "_blank" rel = "noopener nereferrer">GitHub</a>
-		<a href = "#">Articles</a>
+		<a href = "articles.html">Articles</a>
 		<a href = "#">Projects</a>
 		<a href = "index.html">Home</a>
 	</nav>
 	
 	
-	<div class = "parallax">
+	<div class = "parallax" style = "background-image: url('images/projectsFullPage1.jpg');">
 		<center>
 			<div>
 				<image class = "image-responsive" src = "images/projectsType.png" style = "margin-top: 25vh; max-width: 90%;" />
@@ -219,11 +127,11 @@
 	
 	
 	<div class = "footer">
-		<div style = "float: left;">
-			<h4>©John DeHart, 2020</h4>
+		<div style = "float: left; display: inline-block;">
+			<h4>&#169;John DeHart, 2020</h4>
 		</div>
-		<div style = "float: right;">
-			<h4>Contact Me: john@dehart.dev</h4>
+		<div style = "float: right; display: inline-block;">
+			<h4><span class="glyphicon glyphicon-envelope"></span> john@dehart.dev</h4>
 		</div>
 	</div>
 	
@@ -238,6 +146,6 @@
 			}
 		}
 	</script>
-	
+</div>
 </body>
 </html>
